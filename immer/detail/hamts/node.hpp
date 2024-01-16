@@ -99,8 +99,9 @@ struct node
 
     constexpr static std::size_t sizeof_inner_n(count_t count)
     {
-        return immer_offsetof(impl_t, d.data.inner.buffer) +
+        auto const inner_size = immer_offsetof(impl_t, d.data.inner.buffer) +
                sizeof(inner_t::buffer) * count;
+        return std::max(sizeof(node_t), inner_size);
     }
 
 #if IMMER_TAGGED_NODE
